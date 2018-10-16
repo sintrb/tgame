@@ -1,0 +1,11 @@
+<!--game/race.wxml-->
+<view class='race'>
+    <view class='tracks'>
+        <view wx:for="{{users}}" class='track' wx:key="{{item.id}}">
+            <view class='user' style='left:{{item.rate || "0"}}%'>
+                <image class='icon' src='{{item.icon}}'></image>
+                <text class='name'>{{item.name}}</text>
+            </view>
+        </view>
+    </view>
+</view>

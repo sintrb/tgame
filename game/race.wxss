@@ -1,0 +1,48 @@
+/* game/race.wxss */
+
+.race {
+    /* background: whitesmoke; */
+    width: 100%;
+    /* height: 100px; */
+}
+
+.tracks {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid red;
+    border-bottom: 1px solid red;
+}
+
+.track {
+    border-bottom: 1px dashed red;
+    padding: 4px 0px;
+    padding-right: 35px;
+    /* height: 35px; */
+}
+
+.tracks .track:last-child {
+    border-bottom: none;
+}
+
+.user {
+    position: relative;
+    left: 1%;
+    width: 30px;
+    text-align: center;
+    display: flex;
+    vertical-align: middle;
+    /* background: red; */
+    flex-direction: column;
+    align-items: center;
+}
+
+.user .icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+}
+
+.user .name {
+    font-size: 8px;
+    /* display: none; */
+}

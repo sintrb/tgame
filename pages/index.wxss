@@ -1,0 +1,111 @@
+.users {
+    display: flex;
+}
+
+.users .user {
+    width: 60px;
+    text-align: center;
+    margin: 2px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #eee;
+    padding: 2px 5px;
+}
+
+.users .user .icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
+}
+
+.users .user .name {
+    font-size: 12px;
+}
+
+.users .user .rank {
+    font-size: 12px;
+    color: red;
+}
+
+button {
+    margin: 10px;
+}
+
+.hostpanel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.maskcontain {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 10;
+}
+
+.maskcontain .mask {
+    z-index: 10;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background: black;
+    opacity: 0.2;
+}
+
+.maskcontain .maskpanel {
+    z-index: 11;
+    position: fixed;
+    background: white;
+    width: 70vw;
+    /* height: 80vw; */
+    left: 15vw;
+    top: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px 0;
+    border: 1px solid #eee;
+    border-radius: 10px;
+}
+
+.share .wxacode {
+    width: 60vw;
+    height: 60vw;
+}
+
+.inputpanel button {
+    width: 90%;
+}
+
+.inputmain .inputpanel {
+    height: auto;
+}
+
+.inputpanel .input {
+    border: 1px solid #eee;
+    font-size: 20px;
+    text-align: center;
+    padding: 3px;
+    margin: 0px 20px;
+    width: 6em;
+}
+
+.inputpanel .title {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.buttons {
+    display: flex;
+}
+
+.buttons button {
+    flex-grow: 1;
+}

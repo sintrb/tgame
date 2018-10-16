@@ -1,0 +1,6 @@
+{
+    "usingComponents": {
+        "g-race": "/game/race",
+        "g-water": "/game/water"
+    }
+}

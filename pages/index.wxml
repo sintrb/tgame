@@ -1,0 +1,53 @@
+<view wx:if="{{roomId}}">
+    <scroll-view scroll-x style='width:100%;'>
+        <view class='users'>
+            <view wx:for="{{users}}" class='user' wx:key="{{item.id}}">
+                <image class='icon' src='{{item.icon}}'></image>
+                <text class='name'>{{item.name}}</text>
+                <text class='rank' wx:if="{{item.rank}}">第{{item.rank}}名</text>
+            </view>
+        </view>
+    </scroll-view>
+    <view wx:if="{{users && users.length}}" style='margin:5px 0;'>
+        <g-race users="{{users}}" wxif="{{game=='race'}}"></g-race>
+        <view style='height:5px;'></view>
+        <g-water users="{{users}}" wxif="{{game=='water'}}"></g-water>
+    </view>
+    <view wx:if="{{!users.length}}" style='padding:10px;text-align:center;'>
+        请等待玩家进入...
+    </view>
+    <view style='height:10px;'></view>
+    <button wx:if="{{!user}}" type="primary" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">授权登录</button>
+    <view wx:if="{{user && hostId && clientId != hostId}}">
+        <button type="primary" bindtap="runTap" style='margin-top:10px;'> 加油/摇动手机 </button>
+    </view>
+    <view class='hostpanel' wx:if="{{user && clientId == hostId && users.length}}">
+        <button type="warn" bindtap="reset" style='margin-top:10px;'> 重新开始 </button>
+    </view>
+    <view class='buttons'>
+        <button wx:if="{{roomId}}" type="primary" bindtap="toggleShowShare" style='margin-top:10px;'> 分享 </button>
+        <button wx:if="{{user && clientId != hostId}}" type="warn" bindtap="asHost" style='margin-top:10px;'> 主持 </button>
+        <button wx:if="{{roomId}}" type="warn" bindtap="exitRoom" style='margin-top:10px;'> 退出 </button>
+    </view>
+</view>
+<view wx:if="{{!roomId}}">
+    <button type="warn" bindtap="createRoom" style='margin-top:10px;'> 创建房间 </button>
+    <button type="primary" bindtap="toggleShowInput" style='margin-top:10px;'> 加入房间 </button>
+</view>
+<view class='maskcontain share' wx:if="{{isShowShare}}">
+    <view class='mask' bindtap='toggleShowShare'></view>
+    <view class='maskpanel sharepanel'>
+        <image mode='widthFix' class='wxacode' bindtap='saveImage' data-src="{{wxacodeBase + '&scene=' + roomId}}" src="{{wxacodeBase + '&scene=' + roomId}}"></image>
+        <text>房间号 : {{roomId}}</text>
+        <button type="primary" open-type="share" style='margin-top:10px;'> 分享邀请 </button>
+    </view>
+</view>
+<view class='maskcontain inputmain' wx:if="{{isShowInput}}">
+    <view class='mask' bindtap='toggleShowInput'></view>
+    <view class='maskpanel inputpanel'>
+        <text class='title'>输入房间号</text>
+        <input class='input' type="number" focus="{{true}}" bindinput='onInput' data-key='inputRoomId'></input>
+        <button type="primary" style='margin-top:10px;' bindtap='joinRoom'> 确定 </button>
+        <button type="warn" style='margin-top:0px;' bindtap='toggleShowInput'> 取消 </button>
+    </view>
+</view>

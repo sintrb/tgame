@@ -1,0 +1,17 @@
+<!--game/water.wxml-->
+<view class='water'>
+    <view class='buckets'>
+        <view wx:for="{{users}}" class='bucket' wx:key="{{item.id}}">
+            <view class='sky'>
+
+            </view>
+            <view class='user'>
+                <image class='icon' src='{{item.icon}}'></image>
+                <text class='name'>{{item.name}}</text>
+            </view>
+            <view class='ground' style='height:{{item.rate}}px'>
+
+            </view>
+        </view>
+    </view>
+</view>
