@@ -137,11 +137,13 @@ Page({
             }
             if (user.rate > maxRate) {
                 user.rate = maxRate
-                if (!user.rank) {
+                let isHost = this.data.clientId == this.data.hostId;
+                if (!user.rank && isHost) {
                     this.setData({
                         completeCount: (this.data.completeCount || 0) + 1
                     });
                     user.rank = this.data.completeCount;
+                    this.syncUsers();
                 }
             }
             return true;
@@ -347,7 +349,7 @@ Page({
         this.syncUsers();
     },
     onShow() {
-        if (this.data.user && this.data.hostId != this.data.clientId) {
+        if (this.data.user && this.data.hostId == this.data.clientId) {
             this.sendMsgByType({}, 'ticks');
         }
     },
@@ -362,7 +364,7 @@ Page({
         //if (res.from === 'button') {} else {}
         return {
             title: '我在房间' + this.data.roomId + '，快来加入！',
-            path: '/pages/index?roomId=' + this.data.roomId,
+            path: 'pages/index?roomId=' + this.data.roomId,
             imageUrl: this.data.wxacodeBase + '&scene=' + this.data.roomId,
             success: (res) => {
                 // console.log("转发成功", res);

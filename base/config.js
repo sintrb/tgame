@@ -10,7 +10,7 @@ let Config = {
 
     // wsserver: "wss://irapi.inruan.com/ws/",
     // wsserver: "wss://local.inruan.com/ws/",
-    version: '1.0.2',
+    version: '1.0.4',
     wxatag: 'ichat',
     // wxatag: 'wxa',
 
