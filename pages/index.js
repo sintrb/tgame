@@ -24,7 +24,7 @@ Page({
 
         isShowShare: false,
         isShowInput: false,
-
+        version: '1.0.5',
         completeCount: 0,
     },
 
@@ -178,6 +178,7 @@ Page({
                 thiz.addMsgTips("通信断开!", 'tips');
             },
         });
+        this.setAttachedData();
         wx.setNavigationBarTitle({
             title: '房间 ' + this.data.roomId,
         });
@@ -188,6 +189,15 @@ Page({
         wx.setNavigationBarTitle({
             title: '团队游戏百宝箱',
         });
+    },
+    setAttachedData() {
+        if (this.ws && this.data.user) {
+            let data = Object.assign({
+                roomId: this.data.roomId,
+                version: this.data.version,
+            }, this.data.user);
+            this.ws.attach(data);
+        }
     },
     sendRawMsg(msg) {
         if (this.ws) {
@@ -331,6 +341,7 @@ Page({
             }
         });
         this.sendMsgByType({}, 'ticks');
+        this.setAttachedData();
     },
     syncUsers() {
         this.sendMsgByType({
@@ -349,7 +360,7 @@ Page({
         this.syncUsers();
     },
     onShow() {
-        if (this.data.user && this.data.hostId == this.data.clientId) {
+        if (this.data.user && this.data.hostId != this.data.clientId) {
             this.sendMsgByType({}, 'ticks');
         }
     },
@@ -363,7 +374,7 @@ Page({
     onShareAppMessage(res) {
         //if (res.from === 'button') {} else {}
         return {
-            title: '我在房间' + this.data.roomId + '，快来加入！',
+            title: '我在房间' + this.data.roomId + '等你，快来加入游戏吧！',
             path: 'pages/index?roomId=' + this.data.roomId,
             imageUrl: this.data.wxacodeBase + '&scene=' + this.data.roomId,
             success: (res) => {
@@ -371,7 +382,7 @@ Page({
                 this.addMsgTips(`${this.data.user.name} 分享房间`, 'sys');
                 this.setData({
                     isShowShare: false,
-                })
+                });
             },
             fail: (res) => {
                 console.log("转发失败", res);

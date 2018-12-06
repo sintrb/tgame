@@ -14,7 +14,7 @@
         <g-water users="{{users}}" wxif="{{game=='water'}}"></g-water>
     </view>
     <view wx:if="{{!users.length}}" style='padding:10px;text-align:center;'>
-        请等待玩家进入...
+        请等其他待玩家进入...
     </view>
     <view style='height:10px;'></view>
     <button wx:if="{{!user}}" type="primary" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">授权登录</button>
@@ -38,8 +38,8 @@
     <view class='mask' bindtap='toggleShowShare'></view>
     <view class='maskpanel sharepanel'>
         <image mode='widthFix' class='wxacode' bindtap='saveImage' data-src="{{wxacodeBase + '&scene=' + roomId}}" src="{{wxacodeBase + '&scene=' + roomId}}"></image>
-        <text>房间号 : {{roomId}}</text>
-        <button type="primary" open-type="share" style='margin-top:10px;'> 分享邀请 </button>
+        <text style='border:1px solid #eee; padding: 3px 5px;'>房间号 : {{roomId}}</text>
+        <button type="primary" open-type="share" style='margin-top:10px;'> 分享给其他人 </button>
     </view>
 </view>
 <view class='maskcontain inputmain' wx:if="{{isShowInput}}">
@@ -50,4 +50,7 @@
         <button type="primary" style='margin-top:10px;' bindtap='joinRoom'> 确定 </button>
         <button type="warn" style='margin-top:0px;' bindtap='toggleShowInput'> 取消 </button>
     </view>
+</view>
+<view class='bottom-info'>
+    <text>V{{version}}</text>
 </view>

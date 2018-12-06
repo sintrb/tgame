@@ -109,3 +109,8 @@ button {
 .buttons button {
     flex-grow: 1;
 }
+
+.bottom-info{
+    text-align: center;
+    font-size: 12px;
+}
