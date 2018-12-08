@@ -20,11 +20,11 @@ Page({
 
         game: 'race',
         status: 'running',
-        wxacodeBase: 'http://tool.inruan.com/wxacode/?appid=wx3fbb58c5131e8fe1&appsecert=f87071ff08124380b1b2b8c3b3ec6b03&page=pages/index',
+        wxacodeBase: 'https://tool.inruan.com/wxacode/?appid=wx3fbb58c5131e8fe1&appsecert=f87071ff08124380b1b2b8c3b3ec6b03&page=pages/index',
 
         isShowShare: false,
         isShowInput: false,
-        version: '1.0.5',
+        version: '1.0.7',
         completeCount: 0,
     },
 
@@ -52,25 +52,28 @@ Page({
         }, ticksGap * 1000);
 
         setInterval(() => {
-            let users = this.data.users;
+            let isHost = this.data.clientId == this.data.hostId;
+            let users = thiz.data.users;
             var changed = false;
             let limit = Date.now() - ticksGap * 1000 * 3;
             users.map(user => {
-                if (this.tickUser(user) || user.last < limit) {
+                if (thiz.tickUser(user) || user.last < limit) {
                     changed = true;
                 }
             })
-            if (changed) {
-                this.setData({
-                    users: users.filter(user => {
-                        if (user.last < limit) {
-                            this.addMsgTips(`${user.name} 离开`, 'tips');
-                            return false;
-                        } else {
-                            return true;
-                        }
-                    }),
+            if (changed && isHost) {
+                let nusers = users.filter(user => {
+                    if (user.last < limit) {
+                        thiz.addMsgTips(`${user.name} 离开`, 'tips');
+                        return false;
+                    } else {
+                        return true;
+                    }
                 });
+                thiz.setData({
+                    users: nusers,
+                });
+                thiz.syncUsers();
             }
         }, 100);
 
@@ -258,7 +261,6 @@ Page({
                 }
                 return u.id != uid;
             });
-            console.log(users);
             this.setData({
                 users: users,
             });
@@ -319,7 +321,6 @@ Page({
                 if (speed) {
                     this.runMe(speed);
                 }
-                console.log(speed);
             }
             this.lastAc = Object.assign({
                 tm: now
@@ -413,7 +414,7 @@ Page({
     },
     exitRoom() {
         wx.showLoading({
-            title: '...',
+            title: '退出...',
         });
         this.sendMsgByType({}, 'exit');
         this.disconnectWs();
