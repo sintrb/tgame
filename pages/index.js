@@ -19,12 +19,12 @@ Page({
         user: null,
 
         game: 'race',
-        status: 'running',
+        status: 'stop',
         wxacodeBase: 'https://tool.inruan.com/wxacode/?appid=wx3fbb58c5131e8fe1&appsecert=f87071ff08124380b1b2b8c3b3ec6b03&page=pages/index',
 
         isShowShare: false,
         isShowInput: false,
-        version: '1.0.7',
+        version: '1.2.0',
         completeCount: 0,
     },
 
@@ -45,6 +45,7 @@ Page({
                     host: thiz.data.user,
                     hostId: thiz.data.clientId,
                     users: thiz.data.users,
+                    status: thiz.data.status,
                 }, 'room');
             } else {
                 thiz.sendMsgByType({}, 'ticks');
@@ -190,7 +191,7 @@ Page({
         this.ws && this.ws.close();
         this.ws = null;
         wx.setNavigationBarTitle({
-            title: '团队游戏百宝箱',
+            title: '多人游戏合集',
         });
     },
     setAttachedData() {
@@ -284,7 +285,13 @@ Page({
             console.log('unknown ws msg', data);
         }
     },
-    reset() {
+    showToast(msg){
+        wx.showToast({
+            title: msg,
+            icon: 'none',
+        })
+    },
+    start() {
         let users = this.data.users;
         let uix = Math.floor(Math.random() * users.length);
         users.map(user => {
@@ -297,9 +304,33 @@ Page({
             completeCount: 0,
         });
         this.syncUsers();
-        this.addMsgTips(`重新开始！`, 'sys');
+        this.addMsgTips(`预备!`, 'sys');
+        var ct = 3;
+        var tm = setInterval(()=>{
+            this.addMsgTips(`${ct}`, 'sys');
+            --ct;
+            if(ct < 0){
+                clearInterval(tm);
+                this.setData({ status: 'running'});
+                this.addMsgTips(`开始！`, 'sys');
+                this.sendMsgByType({
+                    status: 'running'
+                }, 'room');
+            }
+        }, 1000);
+    },
+    stop(){
+        this.setData({ status: 'stop' });
+        this.addMsgTips(`已结束！`, 'sys');
+        this.sendMsgByType({
+            status: 'stop'
+        }, 'room');
     },
     runMe(speed) {
+        if (this.data.status != 'running'){
+            this.showToast("游戏尚未开始!");
+            return;
+        }
         this.sendMsgByType({
             id: this.data.user.id,
             speed: speed,

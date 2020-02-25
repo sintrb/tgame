@@ -5,7 +5,8 @@
     "window": {
         "backgroundTextStyle": "light",
         "navigationBarBackgroundColor": "#fff",
-        "navigationBarTitleText": "团队游戏百宝箱",
+        "navigationBarTitleText": "多人游戏合集",
         "navigationBarTextStyle": "black"
-    }
+    },
+    "sitemapLocation": "sitemap.json"
 }

@@ -21,7 +21,8 @@
         <button type="primary" bindtap="runTap" style='margin-top:10px;'> 加油/摇动手机 </button>
     </view>
     <view class='hostpanel' wx:if="{{user && clientId == hostId && users.length}}">
-        <button type="warn" bindtap="reset" style='margin-top:10px;'> 重新开始 </button>
+        <button disabled="{{status == 'running'}}" type="warn" bindtap="start" style='margin-top:10px;'> 开始 </button>
+        <button disabled="{{status == 'stop'}}" type="warn" bindtap="stop" style='margin-top:10px;'> 停止 </button>
     </view>
     <button wx:if="{{!user}}" type="primary" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">授权登录</button>
     <view wx:if="{{user}}" class='buttons'>
